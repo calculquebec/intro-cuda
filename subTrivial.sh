@@ -5,7 +5,7 @@
 #PBS -V
 #PBS -N trivial
 
-module add CUDA_Toolkit
+module add CUDA_Toolkit/7.5
  
 cd $PBS_O_WORKDIR
 ./trivial
