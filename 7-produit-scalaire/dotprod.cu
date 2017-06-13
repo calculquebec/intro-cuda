@@ -42,7 +42,15 @@ int main(int argc, char **argv) {
 
     size_t size = SIZE*sizeof(float);
 
-    // Allocate the host and device memories
+    h_c = (float *)malloc(GRID_SIZE*sizeof(float));
+    if (cudaMalloc(&dev_a, size) != cudaSuccess ||
+        cudaMalloc(&dev_b, size) != cudaSuccess ||
+        cudaMalloc(&dev_c, GRID_SIZE*sizeof(float)) != cudaSuccess)
+    {
+        ret = 1;
+        printf("Error allocating GPU memory.\n");
+        goto cleanup;
+    }
 
     fillvectors<<<GRID_SIZE, BLOCK_SIZE>>>(dev_a, dev_b, SIZE);
     if (cudaDeviceSynchronize() != cudaSuccess) {
@@ -51,9 +59,21 @@ int main(int argc, char **argv) {
         goto cleanup;
     }
 
-    // Handle device memory & call to the kernel
+    // Call to the kernel
 
-    // Get the result back from the GPU to display it
+
+    if (cudaDeviceSynchronize() != cudaSuccess) {
+        ret = 5;
+        printf("Error computing a dotproduct.\n");
+        goto cleanup;
+    }
+
+    if (cudaMemcpy(h_c, dev_c, GRID_SIZE*sizeof(float), cudaMemcpyDeviceToHost) != cudaSuccess) {
+        ret = 6;
+        printf("Could not copy result back to host.\n");
+        goto cleanup;
+    }
+    // Complete the reduction
 
     printf("Result: %f\n", result);
 

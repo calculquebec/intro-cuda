@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
         printf("Could not copy result back to host.\n");
         goto cleanup;
     }
-    // Finishing reduction
+    // Complete the reduction
     for (int i=0; i<GRID_SIZE; i++)
         result += h_c[i];
 
