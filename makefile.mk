@@ -1,5 +1,5 @@
 CC=nvcc
-CFLAGS=-arch=sm_12 
+CFLAGS=
 LDFLAGS=
 
 .SUFFIXES: .cu
