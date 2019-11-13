@@ -33,7 +33,7 @@ int main(void)
 //null pointer producing an 'unspecified launch error'.
 //This can be thought of as a CUDA segmentation fault.
   setData<<<1,1>>>(data_d);
-  cudaThreadSynchronize();
+  cudaDeviceSynchronize();
   checkCUDAError( cudaGetLastError(), "setData kernel" );
   checkCUDAError( cudaMemcpy(data_h, data_d, sizeof(int), cudaMemcpyDeviceToHost), 
 		  "cudaMemcpy error");

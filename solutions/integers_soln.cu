@@ -29,7 +29,7 @@ int main( int argc, char** argv)
     fillArray<<<N,1>>>( data_d, N );
 
     //Make sure the device has finished
-    cudaThreadSynchronize();
+    cudaDeviceSynchronize();
     //Copy the results to the host
     cudaMemcpy(data_h, data_d, N*sizeof(int), cudaMemcpyDeviceToHost);
  

@@ -24,7 +24,7 @@ int main(void)
   data_h = (int *)malloc(sizeof(int));
 
   setData<<<1,1>>>(0);
-  cudaThreadSynchronize();
+  cudaDeviceSynchronize();
   error = cudaGetLastError();
   if(error != cudaSuccess)
   {
